@@ -45,57 +45,57 @@ const StartGameScreen = props => {
          );
          return;
       }
-   // Initial state before game starts
-   setConfirmed(true);
-   setSelectedNumber(chosenNumber);
-   setEnteredValue('');
-}
+      // Initial state before game starts
+      setConfirmed(true);
+      setSelectedNumber(chosenNumber);
+      setEnteredValue('');
+   }
 
-let confirmedOutput;
+   let confirmedOutput;
 
-if (confirmed) {
-   confirmedOutput = <Text>Chosen number: {selectedNumber}</Text>
-}
+   if (confirmed) {
+      confirmedOutput = <Text>Chosen number: {selectedNumber}</Text>
+   }
 
-return (
-   <TouchableWithoutFeedback // So we can dismiss the keyboard when tapped in the screen (iOS fix)
-      onPress={() => {
-         Keyboard.dismiss();
-      }}
-   >
-      <View style={styles.screen}>
-         <Text style={styles.title}>Start a New Game!</Text>
-         <Card style={styles.inputContainer}>
-            <Text>Select a Number</Text>
-            <Input style={styles.input}
-               blurOnSubmit autoCapitalize='none'
-               autoCorrect={false}
-               keyboardType="number-pad" // iOS only - no decimals
-               maxLength={2}
-               onChangeText={numberInputHandler}
-               value={enteredValue}
-            />
-            <View style={styles.buttonContainer}>
-               <View style={styles.button}>
-                  <Button
-                     title="Reset"
-                     onPress={resetInputHandler}
-                     color={Colors.warning}
-                  />
+   return (
+      <TouchableWithoutFeedback // So we can dismiss the keyboard when tapped in the screen (iOS fix)
+         onPress={() => {
+            Keyboard.dismiss();
+         }}
+      >
+         <View style={styles.screen}>
+            <Text style={styles.title}>Start a New Game!</Text>
+            <Card style={styles.inputContainer}>
+               <Text>Select a Number</Text>
+               <Input style={styles.input}
+                  blurOnSubmit autoCapitalize='none'
+                  autoCorrect={false}
+                  keyboardType="number-pad" // iOS only - no decimals
+                  maxLength={2}
+                  onChangeText={numberInputHandler}
+                  value={enteredValue}
+               />
+               <View style={styles.buttonContainer}>
+                  <View style={styles.button}>
+                     <Button
+                        title="Reset"
+                        onPress={resetInputHandler}
+                        color={Colors.warning}
+                     />
+                  </View>
+                  <View style={styles.button}>
+                     <Button
+                        title="Confirm"
+                        onPress={confirmInputHandler}
+                        color={Colors.accent}
+                     />
+                  </View>
                </View>
-               <View style={styles.button}>
-                  <Button
-                     title="Confirm"
-                     onPress={confirmInputHandler}
-                     color={Colors.accent}
-                  />
-               </View>
-            </View>
-         </Card>
-         {confirmedOutput}
-      </View>
-   </TouchableWithoutFeedback>
-);
+            </Card>
+            {confirmedOutput}
+         </View>
+      </TouchableWithoutFeedback>
+   );
 };
 
 const styles = StyleSheet.create({

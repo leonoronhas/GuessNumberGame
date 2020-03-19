@@ -25,7 +25,7 @@ const GameOverScreen = props => {
          </Card>
          <MainButton onPress={props.onRestart}>
             New Game
-            </MainButton>
+         </MainButton>
       </View>
    );
 };
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
    image: {
       width: '80%',
       height: 300,
-      borderRadius: 20
+      borderRadius: 20,
    },
    hightlight: {
       color: Color.warning,

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, Button, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
+import { View, StyleSheet, Text, TouchableWithoutFeedback, Keyboard, Alert, Dimensions, ScrollView, KeyboardAvoidingView } from 'react-native';
 import Card from '../components/Card';
 import Colors from '../constants/colors';
 import Input from '../components/Input';
@@ -70,43 +70,45 @@ const StartGameScreen = props => {
    }
 
    return (
-      <TouchableWithoutFeedback // So we can dismiss the keyboard when tapped in the screen (iOS fix)
-         onPress={() => {
-            Keyboard.dismiss();
-         }}
-      >
-         <View style={styles.screen}>
-            <Text style={styles.title}>Start a New Game!</Text>
-            <Card style={styles.inputContainer}>
-               <BodyText>Select a Number</BodyText>
-               <Input style={styles.input}
-                  blurOnSubmit autoCapitalize='none'
-                  autoCorrect={false}
-                  keyboardType="number-pad" // iOS only - no decimals
-                  maxLength={2}
-                  onChangeText={numberInputHandler}
-                  value={enteredValue}
-               />
-               <View style={styles.buttonContainer}>
-                  <View style={styles.button}>
-                     <Button
-                        title="Reset"
-                        onPress={resetInputHandler}
-                        color={Colors.warning}
+      <ScrollView>
+         <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={30}>
+            <TouchableWithoutFeedback // So we can dismiss the keyboard when tapped in the screen (iOS fix)
+               onPress={() => {
+                  Keyboard.dismiss();
+               }}
+            >
+               <View style={styles.screen}>
+                  <Text style={styles.title}>Start a New Game!</Text>
+                  <Card style={styles.inputContainer}>
+                     <BodyText>Select a Number</BodyText>
+                     <Input style={styles.input}
+                        blurOnSubmit autoCapitalize='none'
+                        autoCorrect={false}
+                        keyboardType="number-pad" // iOS only - no decimals
+                        maxLength={2}
+                        onChangeText={numberInputHandler}
+                        value={enteredValue}
                      />
-                  </View>
-                  <View style={styles.button}>
-                     <Button
-                        title="Confirm"
-                        onPress={confirmInputHandler}
-                        color={Colors.accent}
-                     />
-                  </View>
+                     <View style={styles.buttonContainer}>
+                        <View style={styles.button}>
+                           <MainButton style={styles.buttonStyleWarning}
+                              onPress={resetInputHandler}>
+                              Reset
+                     </MainButton>
+                        </View>
+                        <View style={styles.button}>
+                           <MainButton style={styles.buttonStyleConfirmation}
+                              onPress={confirmInputHandler}>
+                              Ready
+                     </MainButton>
+                        </View>
+                     </View>
+                  </Card>
+                  {confirmedOutput}
                </View>
-            </Card>
-            {confirmedOutput}
-         </View>
-      </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback>
+         </KeyboardAvoidingView>
+      </ScrollView>
    );
 };
 
@@ -122,8 +124,9 @@ const styles = StyleSheet.create({
       fontFamily: 'open-sans-bold'
    },
    inputContainer: {
-      width: 300,
-      maxWidth: '80%',
+      width: '90%',
+      maxWidth: '95%',
+      minWidth: 300,
       alignItems: 'center',
    },
    buttonContainer: {
@@ -133,7 +136,14 @@ const styles = StyleSheet.create({
       paddingHorizontal: 15
    },
    button: {
-      width: 90
+      width: Dimensions.get('window').width / 4,
+   },
+   buttonStyleWarning: {
+      backgroundColor: Colors.warning
+   },
+   buttonStyleConfirmation: {
+      backgroundColor: Colors.accent,
+      minWidth: 110
    },
    input: {
       width: 50,

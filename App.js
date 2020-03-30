@@ -8,7 +8,7 @@ import StartGameScreen from './screens/StartGameScreen';
 import GameScreen from './screens/GameScreen';
 import GameOverScreen from './screens/GameOverScreen';
 
-// Helper function to make customs fonts available
+// Helper function to make customs fonts available 
 const fetchFonts = () => {
   return Font.loadAsync({
     'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),

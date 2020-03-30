@@ -18,9 +18,9 @@ const fetchFonts = () => {
 
 export default function App() {
 
-  const [userNumber, setUserNumber] = useState();
-  const [guessRounds, setGuessRounds] = useState(0); // starts at zero always
-  const [dataLoaded, setDataLoaded] = useState(false); // 
+  const [userNumber, setUserNumber] = useState(); 
+  const [guessRounds, setGuessRounds] = useState(0); // starts at zero
+  const [dataLoaded, setDataLoaded] = useState(false); // While on splash  
 
   // Make sure apis (Fonts) are loaded before starting the game
   if (!dataLoaded) {

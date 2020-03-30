@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, TouchableWithoutFeedback, Keyboard, Alert, Dimensions, ScrollView, KeyboardAvoidingView } from 'react-native';
 import Card from '../components/Card';
 import Colors from '../constants/colors';
@@ -10,13 +10,17 @@ import MainButton from '../components/MainButton';
 /*===============================================
 = Home page of the app and design
 = Where the user will be able to input, reset and
-= confirm the guess number.
+= confirm the guess number before the game.
 =============================================== */
 const StartGameScreen = props => {
 
    const [enteredValue, setEnteredValue] = useState(''); // Input (String)
    const [confirmed, setConfirmed] = useState(false);    // Confirm input 
    const [selectedNumber, setSelectedNumber] = useState(''); // Input to be saved (Number)
+   const [buttonWidth, setButtonWidth] = useState(Dimensions.get('window').width / 4); // Dimensions only run once hence the need of useState to re-render
+
+
+
 
    // Function to replace when the input is not a number from 0-9 for ANDROID
    const numberInputHandler = inputText => {
@@ -28,6 +32,22 @@ const StartGameScreen = props => {
       setEnteredValue('');
       setConfirmed(false);
    };
+
+   // Re-run every time the app re-renders
+   useEffect(() => {
+      // Function to set button dimension after a render
+      const updateLayout = () => {
+         setButtonWidth(Dimensions.get('window').width / 4);
+      }
+      // Dimension listener to change/update when new orientation
+      Dimensions.addEventListener('change', updateLayout);
+
+      // Return so it cleans up the new event listener after every re-run
+      return () => {
+         Dimensions.removeEventListener('change', updateLayout);
+      }
+   });
+
    // Function to confirm start of game and user input
    const confirmInputHandler = () => {
       const chosenNumber = parseInt(enteredValue);
@@ -72,7 +92,7 @@ const StartGameScreen = props => {
    return (
       <ScrollView>
          <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={30}>
-            <TouchableWithoutFeedback // So we can dismiss the keyboard when tapped in the screen (iOS fix)
+            <TouchableWithoutFeedback // dismiss the keyboard when tapped in the screen (iOS fix)
                onPress={() => {
                   Keyboard.dismiss();
                }}
@@ -90,13 +110,13 @@ const StartGameScreen = props => {
                         value={enteredValue}
                      />
                      <View style={styles.buttonContainer}>
-                        <View style={styles.button}>
+                        <View style={{ width: buttonWidth }}>
                            <MainButton style={styles.buttonStyleWarning}
                               onPress={resetInputHandler}>
                               Reset
                      </MainButton>
                         </View>
-                        <View style={styles.button}>
+                        <View style={{ width: buttonWidth }}>
                            <MainButton style={styles.buttonStyleConfirmation}
                               onPress={confirmInputHandler}>
                               Ready
@@ -135,9 +155,9 @@ const styles = StyleSheet.create({
       justifyContent: 'space-around',
       paddingHorizontal: 15
    },
-   button: {
-      width: Dimensions.get('window').width / 4,
-   },
+   // button: {
+   //    width: Dimensions.get('window').width / 4,
+   // },
    buttonStyleWarning: {
       backgroundColor: Colors.warning
    },

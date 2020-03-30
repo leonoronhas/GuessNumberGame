@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, SafeAreaView } from 'react-native';
 import * as Font from 'expo-font'; // Built in with expo to help manage custom fonts
 import { AppLoading } from 'expo'; // This will prolong the splash screen until required apis (fonts) are still being loaded
 
@@ -60,10 +60,11 @@ export default function App() {
   }
 
   return (
-    <View style={styles.screen}>
+    // SafeAreaView makes sure all content is visible respecting device styles.
+    <SafeAreaView style={styles.screen}> 
       <Header title="GUESS A NUMBER" />
       {content}
-    </View>
+    </SafeAreaView>
   );
 }
 

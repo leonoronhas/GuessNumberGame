@@ -17,7 +17,7 @@ const StartGameScreen = props => {
    const [enteredValue, setEnteredValue] = useState(''); // Input (String)
    const [confirmed, setConfirmed] = useState(false);    // Confirm input 
    const [selectedNumber, setSelectedNumber] = useState(''); // Input to be saved (Number)
-   const [buttonWidth, setButtonWidth] = useState(Dimensions.get('window').width / 4); // Dimensions only run once hence the need of useState to re-render
+   const [buttonWidth, setButtonWidth] = useState(Dimensions.get('window').width / 3.9); // Dimensions only run once hence the need of useState to re-render
 
 
 
